@@ -1,0 +1,58 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cloudcall_app
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    networks:
+      - laravel
+
+  webserver:
+    image: nginx:alpine
+    container_name: cloudcall_web
+    ports:
+      - "8002:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app
+    networks:
+      - laravel
+
+  db:
+    image: mysql:8.0
+    container_name: cloudcall_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: cloudcall
+      MYSQL_ROOT_PASSWORD: camus
+      MYSQL_USER: cloud
+      MYSQL_PASSWORD: call
+    ports:
+      - "3305:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - laravel
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: cloudcall_admin
+    ports:
+      - "8083:80"
+    environment:
+      PMA_HOST: db
+      PMA_USER: cloud
+      PMA_PASSWORD: call
+    depends_on:
+      - db
+
+volumes:
+  dbdata:
+
+networks:
+  laravel:
