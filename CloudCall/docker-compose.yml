@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   app:
     build:
@@ -46,13 +48,16 @@ services:
       - "8083:80"
     environment:
       PMA_HOST: db
+      PMA_PORT: 3306
       PMA_USER: cloud
       PMA_PASSWORD: call
     depends_on:
       - db
-
+    networks:
+      - laravel 
 volumes:
   dbdata:
 
 networks:
   laravel:
+    driver: bridge
