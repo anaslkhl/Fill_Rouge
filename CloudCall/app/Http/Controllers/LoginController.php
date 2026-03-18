@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Auth as WachAuth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
@@ -59,10 +59,10 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         // return response()->json(["email" => $request->email, "password" => $request->password]);
-        if (FacadesAuth::attempt(["email" => $request->email, "password" => $request->password])) {
+        if (WachAuth::attempt(["email" => $request->email, "password" => $request->password])) {
 
-            FacadesAuth::user();
-            if (FacadesAuth::check()) {
+            WachAuth::user();
+            if (WachAuth::check()) {
 
 
                 alert('Succés!', 'Bienvenue!');
@@ -75,7 +75,7 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        FacadesAuth::logout();
+        WachAuth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

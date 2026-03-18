@@ -8,9 +8,9 @@ class RouteConroller extends Controller
 {
     //
 
-    public function home()
+    public function adminDashboard()
     {
-        return view('home');
+        return view('admin_dashboard');
     }
 
     public function form()
@@ -30,7 +30,7 @@ class RouteConroller extends Controller
 
     public function dashboard()
     {
-        return view('dashboard');
+        return view('admin_dashboard');
     }
 
     public function edit()
