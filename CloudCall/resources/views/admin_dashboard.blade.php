@@ -88,3 +88,6 @@
         <div class="mt-auto pt-6 border-t border-white/10">
             <div class="flex items-center gap-2 text-sm bg-[#4ECDC4]/10 px-3 py-2 rounded-lg">
                 <s
+
+
+                

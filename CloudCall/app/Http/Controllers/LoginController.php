@@ -15,9 +15,9 @@ class LoginController extends Controller
 {
     //
 
-    public function showRegisterForm()
+    public function loginShow()
     {
-        return view('loginForm');
+        return view('login');
     }
 
     public function hello()
