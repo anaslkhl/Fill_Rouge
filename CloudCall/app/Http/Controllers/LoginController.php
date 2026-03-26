@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth as WachAuth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
@@ -20,15 +19,10 @@ class LoginController extends Controller
         return view('login');
     }
 
-    public function hello()
-    {
-        return "hello ";
-    }
 
 
     public function register(Request $request)
     {
-        // return response()->json(["name" => $request->name, "email" => $request->email, "role" => $request->role, "password" => $request->password]);
 
         $request->validate([
             'name' => 'required|string|max:255',
@@ -51,31 +45,30 @@ class LoginController extends Controller
         return redirect('/home')->with('Success', '>>> User registred successfully <<<');
     }
 
-    public function getLogin()
-    {
-        return view('login');
-    }
 
     public function login(Request $request)
     {
-        // return response()->json(["email" => $request->email, "password" => $request->password]);
-        if (WachAuth::attempt(["email" => $request->email, "password" => $request->password])) {
+        $credentials = $request->only('email', 'password');
 
-            WachAuth::user();
-            if (WachAuth::check()) {
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
 
+            $user = Auth::user();
+            if ($user->role === 'agent') return redirect('/agent/dashboard');
+            if ($user->role === 'supervisor') return redirect('/supervisor/dashboard');
+            if ($user->role === 'admin') return redirect('/admin/dashboard');
 
-                alert('Succés!', 'Bienvenue!');
-                return redirect('/home');
-            } else {
-                return redirect()->back()->with('Failed to connect');
-            }
+            return redirect('/home');
         }
+
+        return back()->withErrors([
+            'email' => 'Invalid credentials.',
+        ]);
     }
 
     public function logout(Request $request)
     {
-        WachAuth::logout();
+        Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();

@@ -25,6 +25,11 @@ class User extends Authenticatable
         'status'
     ];
 
+    public function callLogs()
+    {
+        return $this->hasMany(CallLogs::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

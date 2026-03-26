@@ -39,7 +39,6 @@
     </div>
 
 </div>
-
 <script>
     function switchTab(tab) {
         document.getElementById('panel-login').classList.toggle('hidden', tab !== 'login');

@@ -11,7 +11,13 @@ class Client extends Model
     protected $fillable = [
         'name',
         'phone',
-        'history'
+        'issue'
     ];
+
+
+    public function callLogs()
+    {
+        return $this->hasMany(CallLogs::class);
+    }
 
 }
