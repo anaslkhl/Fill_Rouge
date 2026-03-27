@@ -19,7 +19,7 @@ class CallLogsController extends Controller
         $client = Client::create($data);
     }
 
-    public function startcall(Client $client)
+    public function startCall(Client $client)
     {
         $log = CallLogs::create([
             'client_id' => $client->id,
@@ -29,5 +29,15 @@ class CallLogsController extends Controller
         return $log;
     }
 
-    public function endcall()
+    public function endCall(Request $request, CallLogs $log)
+    {
+        $log->update([
+            'status' => $request->status,
+            'duration' => $request->duration,
+            'result' => $request->result,
+            'note' => $request->note
+        ]);
+
+        return redirect()->back()->with('success', 'Call Updated');
+    }
 }

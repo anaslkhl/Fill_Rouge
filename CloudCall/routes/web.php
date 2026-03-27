@@ -21,3 +21,6 @@ Route::view('/dashboard/agent', 'agent-dashboard')->name('dashboard.agent');
 Route::view('/dashboard/supervisor', 'supervisor-dashboard')->name('dashboard.supervisor');
 Route::view('/dashboard/admin', 'admin-dashboard')->name('dashboard.admin');
 Route::view('/client/callform', 'callform')->name('client.callform');
+
+
+Route::resource('clients', [Clien])
