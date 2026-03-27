@@ -20,4 +20,13 @@ class Client extends Model
         return $this->hasMany(CallLogs::class);
     }
 
+    protected static function booted()
+    {
+        static::created(function ($client){
+            CallLogs::create([
+                'client_id' => $client->id,
+                'status' => 'pending'
+            ]);
+        });
+    }
 }
