@@ -23,4 +23,3 @@ Route::view('/dashboard/admin', 'admin-dashboard')->name('dashboard.admin');
 Route::view('/client/callform', 'callform')->name('client.callform');
 
 
-Route::resource('clients', [Clien])

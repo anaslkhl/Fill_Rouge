@@ -12,12 +12,6 @@ class CallLogsController extends Controller
 {
     //
 
-    public function store(Request $request)
-    {
-        $data = $request->validated();
-
-        $client = Client::create($data);
-    }
 
     public function startCall(Client $client)
     {
@@ -37,7 +31,6 @@ class CallLogsController extends Controller
             'result' => $request->result,
             'note' => $request->note
         ]);
-
         return redirect()->back()->with('success', 'Call Updated');
     }
 }
