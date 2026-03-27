@@ -35,4 +35,10 @@ class ClientController extends Controller
         $client->update($request->validated());
         return redirect()->route('client.index')->with('Success', 'Client updated successfully');
     }
+
+    public function destroy(Client $client)
+    {
+        $client->delete();
+        return redirect('client.index')->with('Success', 'Client deleted successfully');
+    }
 }
