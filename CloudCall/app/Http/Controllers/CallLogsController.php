@@ -13,6 +13,21 @@ class CallLogsController extends Controller
     //
 
 
+    public function index()
+    {
+        $callLogs = CallLogs::latest()->get();
+
+        return view('calllogs.index', compact('callLogs'));
+    }
+
+    public function show($id)
+    {
+        $calllog = CallLogs::findOrFail($id);
+
+        return view('calllog.show', compact('calllog'));
+    }
+
+
     public function startCall(Client $client)
     {
         $log = CallLogs::create([
