@@ -18,22 +18,21 @@ class CallLogs extends Model
     public static function startCall(Client $client)
     {
 
-        $agent = User::where('role', 'agent')->wehre('status', 'online')->first();
+        $agent = User::where('role', 'agent')->where('status', 'online')->first();
 
         if (!$agent) {
-            return back()->with('error', 'No agent available');
+            return null;
         }
 
         $agent->status = 'on_call';
         $agent->save();
 
-        $log = CallLogs::create([
+        return self::create([
             'client_id' => $client->id,
             'user_id' => $agent->id,
             'status' => 'calling',
             'created_at' => now()
         ]);
-        return $log;
     }
 
     public function client()
