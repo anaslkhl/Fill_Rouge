@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CallLogs;
 use App\Models\Client;
 use Illuminate\Http\Request;
 
@@ -18,9 +19,21 @@ class ClientController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validated();
+        $data = $request->validate([
+            'name' => 'string|max:256',
+            'phone' => 'string|max:16',
+            'issue' => 'string|max:1024'
+        ]);
 
         $client = Client::create($data);
+        $log = CallLogs::startCall($client);
+        if(!$log)
+        {
+            return back()->with('Failed', 'there is no available agent');
+        }
+        
+
+        return view('home');
     }
 
     public function show($client)

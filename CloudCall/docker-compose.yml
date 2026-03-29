@@ -5,6 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: cloudcall_app
+    user: "${UID}:${GID}"
     working_dir: /var/www
     volumes:
       - ./:/var/www

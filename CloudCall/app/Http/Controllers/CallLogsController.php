@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CallLogs;
 use App\Models\Client;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use function Symfony\Component\Clock\now;
@@ -28,15 +29,7 @@ class CallLogsController extends Controller
     }
 
 
-    public function startCall(Client $client)
-    {
-        $log = CallLogs::create([
-            'client_id' => $client->id,
-            'status' => 'calling',
-            'created_at' => now()
-        ]);
-        return $log;
-    }
+   
 
     public function endCall(Request $request, CallLogs $log)
     {
@@ -47,5 +40,13 @@ class CallLogsController extends Controller
             'note' => $request->note
         ]);
         return redirect()->back()->with('success', 'Call Updated');
+    }
+
+    public function destroy($id)
+    {
+        $calllog = CallLogs::findOrFail($id);
+        $calllog->delete();
+
+        return redirect()->back()->with('Success', 'Calllog deleted successfully');
     }
 }

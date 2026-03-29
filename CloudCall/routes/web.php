@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ClientController;
+use App\Http\Controllers\heyController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RouteConroller;
 use Illuminate\Auth\Events\Login;
@@ -23,3 +25,5 @@ Route::view('/dashboard/admin', 'admin-dashboard')->name('dashboard.admin');
 Route::view('/client/callform', 'callform')->name('client.callform');
 
 
+Route::post('/client/store', [ClientController::class, 'store'])->name('client.store');
+Route::get('hey', [heyController::class, 'hey'])->name('hey');
