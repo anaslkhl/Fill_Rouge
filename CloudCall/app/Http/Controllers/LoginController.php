@@ -29,19 +29,18 @@ class LoginController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|max:255|unique:users',
             'role' => 'required|string',
-            'phone' => 'required|integer',
+            'phone' => 'required|string',
             'password' => 'required|string|min:6|confirmed',
-            'status' => 'required|string'
         ]);
 
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'password' => Hash::make($request->password),
             'role' => $request->role,
-            'status' => $request->status,
-            'phone' => $request->phone,
-            'password' => Hash::make($request->password)
+            'status' => 'online',
+            'phone' => $request->phone
         ]);
 
 

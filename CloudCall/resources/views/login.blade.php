@@ -29,9 +29,9 @@
         <input type="tel" name="phone" placeholder="Phone" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">
         <select name="role" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">
             <option value="">Select role…</option>
-            <option>Agent</option>
-            <option>Supervisor</option>
-            <option>Admin</option>
+            <option value="agent">Agent</option>
+            <option value="supervisor">Supervisor</option>
+            <option value="admin">Admin</option>
         </select>
         <input type="password" name="password" placeholder="Password" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">
         <input type="password" name="password_confirmation" placeholder="Confirm Password" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">

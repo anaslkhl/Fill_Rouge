@@ -30,3 +30,4 @@ Route::post('/client/store', [ClientController::class, 'store'])->name('client.s
 Route::post('/user/register', [LoginController::class, 'register'])->name('user.register');
 
 Route::post('/user/login', [LoginController::class, 'login'])->name('user.login');
+Route::get('/user/logout', [LoginController::class, 'logout'])->name('user.logout');
