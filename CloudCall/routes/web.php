@@ -13,7 +13,7 @@ Route::get('/', function () {
 
 Route::get('/catalog', [RouteConroller::class, 'catalog']);
 Route::get('/dashboard', [RouteConroller::class, 'dashboard']);
-Route::get('/login', [LoginController::class, 'loginShow']);
+Route::get('/loginForm', [LoginController::class, 'loginShow'])->name('login.form');
 
 
 
@@ -26,4 +26,7 @@ Route::view('/client/callform', 'callform')->name('client.callform');
 
 
 Route::post('/client/store', [ClientController::class, 'store'])->name('client.store');
-Route::get('hey', [heyController::class, 'hey'])->name('hey');
+
+Route::post('/user/register', [LoginController::class, 'register'])->name('user.register');
+
+Route::post('/user/login', [LoginController::class, 'login'])->name('user.login');

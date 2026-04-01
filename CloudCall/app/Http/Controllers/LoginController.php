@@ -24,10 +24,12 @@ class LoginController extends Controller
     public function register(Request $request)
     {
 
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|max:255|unique:users',
             'role' => 'required|string',
+            'phone' => 'required|integer',
             'password' => 'required|string|min:6|confirmed',
             'status' => 'required|string'
         ]);
@@ -38,6 +40,7 @@ class LoginController extends Controller
             'email' => $request->email,
             'role' => $request->role,
             'status' => $request->status,
+            'phone' => $request->phone,
             'password' => Hash::make($request->password)
         ]);
 
@@ -48,6 +51,7 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
