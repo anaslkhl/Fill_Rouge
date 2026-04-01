@@ -26,12 +26,13 @@ class ClientController extends Controller
         ]);
 
         $client = Client::create($data);
+        // if (!$client) {
+        //     return "client not created";
+        // }
         $log = CallLogs::startCall($client);
-        if(!$log)
-        {
+        if (!$log) {
             return back()->with('Failed', 'there is no available agent');
         }
-        
 
         return view('home');
     }

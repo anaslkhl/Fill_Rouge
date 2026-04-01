@@ -29,8 +29,6 @@ class CallLogsController extends Controller
     }
 
 
-   
-
     public function endCall(Request $request, CallLogs $log)
     {
         $log->update([

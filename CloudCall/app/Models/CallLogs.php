@@ -9,7 +9,7 @@ class CallLogs extends Model
     //
     protected $fillable = [
         'client_id',
-        'agent_id',
+        'user_id',
         'result',
         'duration',
         'notes',
@@ -19,14 +19,15 @@ class CallLogs extends Model
     {
 
         $agent = User::where('role', 'agent')->where('status', 'online')->first();
+        
+        
 
         if (!$agent) {
             return null;
         }
 
-        $agent->status = 'on_call';
+        $agent->status = 'oncall';
         $agent->save();
-
         return self::create([
             'client_id' => $client->id,
             'user_id' => $agent->id,
