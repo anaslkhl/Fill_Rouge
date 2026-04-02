@@ -8,7 +8,10 @@
         <!-- Example list -->
         <ul>
             <li class="py-2 border-b border-slate-700">
-                Client: John Doe | Phone: 0600000000
+                
+                <p>{{$call->client->name ?? 'vide'}}</p>
+                <p>{{$call->client->phone ?? 'vide'}}</p>
+                <p>{{$call->client->issue ?? 'vide'}}</p>
                 <button class="ml-4 bg-green-600 px-2 py-1 rounded hover:bg-green-700">Call</button>
             </li>
         </ul>

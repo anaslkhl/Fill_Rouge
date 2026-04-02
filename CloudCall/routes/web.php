@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgentController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\heyController;
 use App\Http\Controllers\LoginController;
@@ -31,3 +32,5 @@ Route::post('/user/register', [LoginController::class, 'register'])->name('user.
 
 Route::post('/user/login', [LoginController::class, 'login'])->name('user.login');
 Route::get('/user/logout', [LoginController::class, 'logout'])->name('user.logout');
+
+Route::get('/agent/call', [AgentController::class, 'myclients'])->name('agent.call');
