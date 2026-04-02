@@ -16,9 +16,8 @@ class AgentController extends Controller
         $agentId = Auth::id();
 
         $call = CallLogs::with('client')
-            ->where('agent_id', $agentId)
-            ->where('status', 'oncall')->latest()->first();
-        dd($agentId, $call);
-        return view('dashboard.agent', compact('call'));
+            ->where('user_id', $agentId)
+            ->where('status', 'calling')->latest()->first();
+        return view('agent-dashboard', compact('call'));
     }
 }

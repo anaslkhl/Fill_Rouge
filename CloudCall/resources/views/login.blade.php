@@ -1,46 +1,53 @@
 @extends('layouts.app')
 @section('content')
 
-<div class="w-full max-w-md mx-auto p-6 bg-[#111827] rounded-2xl shadow-lg">
+<div class="w-full max-w-md mx-auto p-7 bg-[#0c1120] rounded-2xl border border-white/[0.07] shadow-[0_24px_48px_rgba(0,0,0,0.5)] relative overflow-hidden before:absolute before:content-[''] before:-top-20 before:-right-20 before:w-48 before:h-48 before:bg-[radial-gradient(circle,rgba(56,139,253,0.08)_0%,transparent_70%)] before:pointer-events-none">
 
     <!-- Tabs -->
-    <div class="flex mb-4">
-        <button type="button" id="tab-login" onclick="switchTab('login')" class="flex-1 py-2 bg-blue-600 rounded-l-xl font-semibold text-white">Sign In</button>
-        <button type="button" id="tab-register" onclick="switchTab('register')" class="flex-1 py-2 bg-gray-700 rounded-r-xl font-semibold text-gray-300">Register</button>
+    <div class="flex mb-7 bg-[#080c14] border border-white/[0.06] rounded-xl p-[3px] gap-[3px]">
+        <button type="button" id="tab-login" onclick="switchTab('login')" class="flex-1 py-2.5 bg-[#131d35] border border-[rgba(96,165,250,0.18)] rounded-[9px] text-[13.5px] font-medium text-blue-400 shadow-[0_1px_8px_rgba(96,165,250,0.08)] transition-all duration-200">Sign In</button>
+        @if(auth()->user()->role === 'admin')
+        <button type="button" id="tab-register" onclick="switchTab('register')" class="flex-1 py-2.5 rounded-[9px] text-[13.5px] font-medium text-white/35 transition-all duration-200">Register</button>
+        @endif
     </div>
 
     <!-- Login Form -->
-    <form action="/user/login" id="panel-login" class="block space-y-4" method="POST">
+    <form action="/user/login" id="panel-login" class="block space-y-3" method="POST">
         @csrf
-        <input type="email" name="email" placeholder="Email" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">
-        <input type="password" name="password" placeholder="Password" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">
-        <button type="submit" class="w-full py-2 bg-blue-500 rounded-xl font-semibold">Sign In</button>
-        <p class="text-xs text-gray-400 text-center">
+        <input type="email" name="email" placeholder="Email" class="w-full px-3.5 py-[11px] rounded-[10px] bg-[#080c14] border border-white/[0.08] text-[#e2e8f0] text-sm placeholder-white/[0.22] focus:outline-none focus:border-blue-400/35 focus:bg-[#09101d] transition-all duration-200">
+        <input type="password" name="password" placeholder="Password" class="w-full px-3.5 py-[11px] rounded-[10px] bg-[#080c14] border border-white/[0.08] text-[#e2e8f0] text-sm placeholder-white/[0.22] focus:outline-none focus:border-blue-400/35 focus:bg-[#09101d] transition-all duration-200">
+        <button type="submit" class="w-full py-3 mt-0.5 bg-blue-700 rounded-[10px] text-sm font-semibold text-white tracking-wide shadow-[0_2px_16px_rgba(29,78,216,0.3)] hover:bg-blue-600 hover:shadow-[0_4px_22px_rgba(29,78,216,0.45)] hover:-translate-y-px transition-all duration-200">Sign In</button>
+        @if(auth()->user()->role === 'admin')
+        <p class="text-[12.5px] text-white/[0.28] text-center">
             Don't have an account?
-            <button type="button" onclick="switchTab('register')" class="text-blue-400">Register</button>
+            <button type="button" onclick="switchTab('register')" class="text-blue-400 font-medium hover:text-blue-300 transition-colors">Register</button>
         </p>
+        @endif
     </form>
 
     <!-- Register Form -->
-    <form action="/user/register" method="POST" id="panel-register" class="hidden space-y-4">
+    @if(auth()->user()->role === 'admin')
+    <form action="/user/register" method="POST" id="panel-register" class="hidden space-y-3">
         @csrf
-        <input type="text" name="name" placeholder="Full Name" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">
-        <input type="email" name="email" placeholder="Email" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">
-        <input type="tel" name="phone" placeholder="Phone" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">
-        <select name="role" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">
+        <input type="text" name="name" placeholder="Full Name" class="w-full px-3.5 py-[11px] rounded-[10px] bg-[#080c14] border border-white/[0.08] text-[#e2e8f0] text-sm placeholder-white/[0.22] focus:outline-none focus:border-blue-400/35 focus:bg-[#09101d] transition-all duration-200">
+        <input type="email" name="email" placeholder="Email" class="w-full px-3.5 py-[11px] rounded-[10px] bg-[#080c14] border border-white/[0.08] text-[#e2e8f0] text-sm placeholder-white/[0.22] focus:outline-none focus:border-blue-400/35 focus:bg-[#09101d] transition-all duration-200">
+        <input type="tel" name="phone" placeholder="Phone" class="w-full px-3.5 py-[11px] rounded-[10px] bg-[#080c14] border border-white/[0.08] text-[#e2e8f0] text-sm placeholder-white/[0.22] focus:outline-none focus:border-blue-400/35 focus:bg-[#09101d] transition-all duration-200">
+        <select name="role" class="w-full px-3.5 py-[11px] rounded-[10px] bg-[#080c14] border border-white/[0.08] text-[#e2e8f0] text-sm focus:outline-none focus:border-blue-400/35 focus:bg-[#09101d] transition-all duration-200">
             <option value="">Select role…</option>
             <option value="agent">Agent</option>
             <option value="supervisor">Supervisor</option>
             <option value="admin">Admin</option>
         </select>
-        <input type="password" name="password" placeholder="Password" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">
-        <input type="password" name="password_confirmation" placeholder="Confirm Password" class="w-full p-2 rounded-xl bg-[#0F172A] border border-gray-600 text-white">
-        <button type="submit" class="w-full py-2 bg-purple-500 rounded-xl font-semibold">Create Account</button>
-        <p class="text-xs text-gray-400 text-center">
+        <div class="h-px bg-white/[0.05]"></div>
+        <input type="password" name="password" placeholder="Password" class="w-full px-3.5 py-[11px] rounded-[10px] bg-[#080c14] border border-white/[0.08] text-[#e2e8f0] text-sm placeholder-white/[0.22] focus:outline-none focus:border-blue-400/35 focus:bg-[#09101d] transition-all duration-200">
+        <input type="password" name="password_confirmation" placeholder="Confirm Password" class="w-full px-3.5 py-[11px] rounded-[10px] bg-[#080c14] border border-white/[0.08] text-[#e2e8f0] text-sm placeholder-white/[0.22] focus:outline-none focus:border-blue-400/35 focus:bg-[#09101d] transition-all duration-200">
+        <button type="submit" class="w-full py-3 mt-0.5 bg-violet-700 rounded-[10px] text-sm font-semibold text-white tracking-wide shadow-[0_2px_16px_rgba(109,40,217,0.3)] hover:bg-violet-600 hover:shadow-[0_4px_22px_rgba(109,40,217,0.45)] hover:-translate-y-px transition-all duration-200">Create Account</button>
+        <p class="text-[12.5px] text-white/[0.28] text-center">
             Already have an account?
-            <button type="button" onclick="switchTab('login')" class="text-blue-400">Sign In</button>
+            <button type="button" onclick="switchTab('login')" class="text-blue-400 font-medium hover:text-blue-300 transition-colors">Sign In</button>
         </p>
     </form>
+    @endif
 
 </div>
 <script>
@@ -50,10 +57,16 @@
         document.getElementById('panel-register').classList.toggle('hidden', tab !== 'register');
         document.getElementById('panel-register').classList.toggle('block', tab === 'register');
 
-        document.getElementById('tab-login').classList.toggle('bg-blue-600', tab === 'login');
-        document.getElementById('tab-login').classList.toggle('bg-gray-700', tab !== 'login');
-        document.getElementById('tab-register').classList.toggle('bg-blue-600', tab === 'register');
-        document.getElementById('tab-register').classList.toggle('bg-gray-700', tab !== 'register');
+        document.getElementById('tab-login').classList.toggle('bg-[#131d35]', tab === 'login');
+        document.getElementById('tab-login').classList.toggle('border', tab === 'login');
+        document.getElementById('tab-login').classList.toggle('border-[rgba(96,165,250,0.18)]', tab === 'login');
+        document.getElementById('tab-login').classList.toggle('text-blue-400', tab === 'login');
+        document.getElementById('tab-login').classList.toggle('text-white/35', tab !== 'login');
+        document.getElementById('tab-register').classList.toggle('bg-[#131d35]', tab === 'register');
+        document.getElementById('tab-register').classList.toggle('border', tab === 'register');
+        document.getElementById('tab-register').classList.toggle('border-[rgba(96,165,250,0.18)]', tab === 'register');
+        document.getElementById('tab-register').classList.toggle('text-blue-400', tab === 'register');
+        document.getElementById('tab-register').classList.toggle('text-white/35', tab !== 'register');
     }
 </script>
 
