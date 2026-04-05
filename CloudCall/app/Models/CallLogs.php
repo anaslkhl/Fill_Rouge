@@ -13,6 +13,7 @@ class CallLogs extends Model
         'result',
         'duration',
         'notes',
+        'status'
     ];
 
     public static function startCall(Client $client)
@@ -21,13 +22,10 @@ class CallLogs extends Model
         $agent = User::where('role', 'agent')->where('status', 'online')->first();
         
         
-
         if (!$agent) {
             return null;
         }
 
-        $agent->status = 'oncall';
-        $agent->save();
         return self::create([
             'client_id' => $client->id,
             'user_id' => $agent->id,
@@ -43,6 +41,6 @@ class CallLogs extends Model
 
     public function agent()
     {
-        return $this->belongsTo(User::class, 'agent_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

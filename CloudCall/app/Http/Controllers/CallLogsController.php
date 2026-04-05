@@ -28,6 +28,23 @@ class CallLogsController extends Controller
         return view('calllog.show', compact('calllog'));
     }
 
+    public function startCall($id)
+    {
+        $call = CallLogs::with('agent')->findOrFail($id);
+
+        $call->update([
+            'status' => 'ongoing'
+        ]);
+
+        if ($call->agent) {
+            $call->agent->update([
+                'status' => 'oncall'
+            ]);
+        }
+
+        return redirect()->back()->with('Success');
+    }
+
 
     public function endCall(Request $request, CallLogs $log)
     {
