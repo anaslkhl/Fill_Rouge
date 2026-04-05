@@ -57,9 +57,9 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
-            if ($user->role === 'agent') return redirect('/agent/dashboard');
-            if ($user->role === 'supervisor') return redirect('/supervisor/dashboard');
-            if ($user->role === 'admin') return redirect('/admin/dashboard');
+            if ($user->role === 'agent') return redirect('/dashboard/agent');
+            if ($user->role === 'supervisor') return redirect('/dashboard/supervisor');
+            if ($user->role === 'admin') return redirect('/dashboard/admin');
 
             return redirect('/home');
         }

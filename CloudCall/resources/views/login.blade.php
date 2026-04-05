@@ -6,9 +6,11 @@
     <!-- Tabs -->
     <div class="flex mb-7 bg-[#080c14] border border-white/[0.06] rounded-xl p-[3px] gap-[3px]">
         <button type="button" id="tab-login" onclick="switchTab('login')" class="flex-1 py-2.5 bg-[#131d35] border border-[rgba(96,165,250,0.18)] rounded-[9px] text-[13.5px] font-medium text-blue-400 shadow-[0_1px_8px_rgba(96,165,250,0.08)] transition-all duration-200">Sign In</button>
+        @auth
         @if(auth()->user()->role === 'admin')
         <button type="button" id="tab-register" onclick="switchTab('register')" class="flex-1 py-2.5 rounded-[9px] text-[13.5px] font-medium text-white/35 transition-all duration-200">Register</button>
         @endif
+        @endauth
     </div>
 
     <!-- Login Form -->
@@ -17,15 +19,18 @@
         <input type="email" name="email" placeholder="Email" class="w-full px-3.5 py-[11px] rounded-[10px] bg-[#080c14] border border-white/[0.08] text-[#e2e8f0] text-sm placeholder-white/[0.22] focus:outline-none focus:border-blue-400/35 focus:bg-[#09101d] transition-all duration-200">
         <input type="password" name="password" placeholder="Password" class="w-full px-3.5 py-[11px] rounded-[10px] bg-[#080c14] border border-white/[0.08] text-[#e2e8f0] text-sm placeholder-white/[0.22] focus:outline-none focus:border-blue-400/35 focus:bg-[#09101d] transition-all duration-200">
         <button type="submit" class="w-full py-3 mt-0.5 bg-blue-700 rounded-[10px] text-sm font-semibold text-white tracking-wide shadow-[0_2px_16px_rgba(29,78,216,0.3)] hover:bg-blue-600 hover:shadow-[0_4px_22px_rgba(29,78,216,0.45)] hover:-translate-y-px transition-all duration-200">Sign In</button>
+        @auth
         @if(auth()->user()->role === 'admin')
         <p class="text-[12.5px] text-white/[0.28] text-center">
             Don't have an account?
             <button type="button" onclick="switchTab('register')" class="text-blue-400 font-medium hover:text-blue-300 transition-colors">Register</button>
         </p>
         @endif
+        @endauth
     </form>
 
     <!-- Register Form -->
+    @auth
     @if(auth()->user()->role === 'admin')
     <form action="/user/register" method="POST" id="panel-register" class="hidden space-y-3">
         @csrf
@@ -48,6 +53,7 @@
         </p>
     </form>
     @endif
+    @endauth
 
 </div>
 <script>
