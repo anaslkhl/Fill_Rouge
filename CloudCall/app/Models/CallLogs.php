@@ -38,6 +38,7 @@ class CallLogs extends Model
     {
         return $this->belongsTo(Client::class);
     }
+    
 
     public function agent()
     {
