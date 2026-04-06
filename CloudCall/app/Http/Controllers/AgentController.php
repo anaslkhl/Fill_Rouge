@@ -17,8 +17,15 @@ class AgentController extends Controller
 
         $call = CallLogs::with('client')
             ->where('user_id', $agentId)
-            ->orderBy('created_at', 'desc')
+            ->whereIn('status', ['calling', 'ongoing'])
+            ->latest()
             ->first();
-        return view('agent-dashboard', compact('call'));
+
+        $callLogs = CallLogs::with('client')
+            ->where('user_id', $agentId)
+            ->latest()
+            ->get();
+
+        return view('agent-dashboard', compact('call', 'callLogs'));
     }
 }

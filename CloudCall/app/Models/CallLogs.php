@@ -20,8 +20,8 @@ class CallLogs extends Model
     {
 
         $agent = User::where('role', 'agent')->where('status', 'online')->first();
-        
-        
+
+
         if (!$agent) {
             return null;
         }
@@ -42,5 +42,9 @@ class CallLogs extends Model
     public function agent()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function feedback()
+    {
+        return $this->hasOne(callFeedback::class, 'call_log_id');
     }
 }

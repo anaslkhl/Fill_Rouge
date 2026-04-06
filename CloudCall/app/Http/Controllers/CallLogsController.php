@@ -6,6 +6,7 @@ use App\Models\CallLogs;
 use App\Models\Client;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use function Symfony\Component\Clock\now;
 
@@ -32,27 +33,40 @@ class CallLogsController extends Controller
     {
         $call = CallLogs::with('agent')->findOrFail($id);
 
-        $call->update([
-            'status' => 'ongoing'
-        ]);
+        if ($call->status !== 'calling') {
+            return back()->with('error', 'Call cannot be started');
+        }
 
-        if ($call->agent) {
+        if (!$call->agent) {
+            return back()->with('error', 'No agent assigned');
+        }
+
+        DB::transaction(function () use ($call) {
+            $call->update([
+                'status' => 'ongoing'
+            ]);
+
             $call->agent->update([
                 'status' => 'oncall'
             ]);
-        }
+        });
 
-        return redirect()->back()->with('Success');
+        return back()->with('success', 'Call started');
     }
 
 
     public function endCall(Request $request, CallLogs $log)
     {
         $log->update([
-            'status' => $request->status,
+            'status' => 'ended',
             'duration' => $request->duration,
             'result' => $request->result,
-            'note' => $request->note
+            'notes' => $request->note
+        ]);
+
+        $agent = $log->agent();
+        $agent->update([
+            'status' => 'online'
         ]);
         return redirect()->back()->with('success', 'Call Updated');
     }

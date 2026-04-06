@@ -29,10 +29,17 @@ class ClientController extends Controller
 
         $client = Client::firstOrCreate(
             ['phone' => $data['phone']],
-            array_merge($data, [
+            [
+                'name' => $data['name'],
+                'issue' => $data['issue'],
                 'uuid' => Str::uuid()
-            ])
+            ]
         );
+
+        $client->update([
+            'name' => $data['name'],
+            'issue' => $data['issue']
+        ]);
 
         $log = CallLogs::startCall($client);
 
@@ -40,10 +47,9 @@ class ClientController extends Controller
             return back()->with('error', 'No available agent');
         }
 
-        return redirect()->route('client.home', [
-            'uuid' => $client->uuid
-        ]);
+        return redirect()->route('client.call', ['uuid' => $client->uuid]);
     }
+
 
     public function show(Client $client)
     {
@@ -51,7 +57,12 @@ class ClientController extends Controller
         return view('client.show', compact('client'));
     }
 
-    public function home($uuid)
+    public function home()
+    {
+        return view('client-page');
+    }
+
+    public function call($uuid)
     {
         $client = Client::where('uuid', $uuid)->firstOrFail();
 
@@ -59,8 +70,9 @@ class ClientController extends Controller
             ->latest()
             ->first();
 
-        return view('client-page', compact('call', 'client'));
+        return view('client-call', compact('client', 'call'));
     }
+
 
 
     public function update(Request $request, Client $client)

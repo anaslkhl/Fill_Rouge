@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\callFedbackController;
 use App\Http\Controllers\CallLogsController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\heyController;
@@ -10,7 +11,7 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('home');
+    return view('client-page');
 });
 
 Route::get('/catalog', [RouteConroller::class, 'catalog']);
@@ -21,11 +22,11 @@ Route::get('/loginForm', [LoginController::class, 'loginShow'])->name('login.for
 
 
 Route::get('/home', [ClientController::class, 'home'])->name('client.home');
-Route::view('/dashboard/agent', 'agent-dashboard')->name('dashboard.agent');
+Route::get('/dashboard/agent', [AgentController::class, 'myclients'])->name('dashboard.agent');
 Route::view('/dashboard/supervisor', 'supervisor-dashboard')->name('dashboard.supervisor');
 Route::view('/dashboard/admin', 'admin-dashboard')->name('dashboard.admin');
 Route::view('/client/callform', 'callform')->name('client.callform');
-
+Route::view('client', 'client-page')->name('client.page');
 
 Route::post('/client/store', [ClientController::class, 'store'])->name('client.store');
 Route::get('/client/{uuid}', [ClientController::class, 'home'])->name('client.home');
@@ -36,4 +37,11 @@ Route::get('/user/logout', [LoginController::class, 'logout'])->name('user.logou
 
 Route::get('/agent/call', [AgentController::class, 'myclients'])->name('agent.call');
 
-Route::post('/call/{id}', [CallLogsController::class, 'startCall'])->name('call.start');
+Route::post('/call/{uuid?}', [CallLogsController::class, 'startCall'])->name('call.start');
+
+
+Route::get('/call/{uuid}', [ClientController::class, 'call'])->name('client.call');
+Route::post('/feedback/{call}', [callFedbackController::class, 'store'])
+    ->name('feedback.store');
+
+Route::post('/call/{log}/end', [CallLogsController::class, 'endCall'])->name('call.end');

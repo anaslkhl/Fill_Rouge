@@ -7,7 +7,6 @@
 <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/60 backdrop-blur-2xl border-b border-white/[0.05]">
     <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 
-        {{-- Logo --}}
         <a href="{{ route('client.home') }}" class="flex items-center gap-2.5 group">
             <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center shadow-[0_0_12px_rgba(56,189,248,0.4)] group-hover:shadow-[0_0_20px_rgba(56,189,248,0.65)] transition-all duration-200">
                 <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -17,89 +16,24 @@
             <span class="text-sm font-bold tracking-tight text-white">Cloud<span class="text-sky-400">Call</span></span>
         </a>
 
-        {{-- Nav Links --}}
         <div class="hidden md:flex items-center gap-1">
             <a href="{{ route('client.home') }}" class="text-xs font-medium text-white bg-white/[0.06] px-3.5 py-2 rounded-lg">Home</a>
             <a href="{{ route('client.callform') }}" class="text-xs font-medium text-slate-400 hover:text-white px-3.5 py-2 rounded-lg hover:bg-white/[0.05] transition-all duration-150">New Request</a>
-            <a href="#" class="text-xs font-medium text-slate-400 hover:text-white px-3.5 py-2 rounded-lg hover:bg-white/[0.05] transition-all duration-150">History</a>
-        </div>
-
-        {{-- Right Side --}}
-        <div class="flex items-center gap-3">
-            @if($call && $call->status === 'calling')
-            <span class="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase text-sky-300 bg-sky-400/10 border border-sky-400/20 px-2.5 py-1 rounded-full">
-                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
-                In Call
-            </span>
-            @elseif($call && $call->status === 'ongoing')
-            <span class="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase text-emerald-300 bg-emerald-400/10 border border-emerald-400/20 px-2.5 py-1 rounded-full">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                Ongoing
-            </span>
-            @endif
-
-            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 border border-white/10 flex items-center justify-center text-xs font-bold text-slate-300 cursor-pointer hover:border-sky-400/30 hover:text-sky-400 transition-all duration-150">
-                {{ strtoupper(substr(auth()->user()->name ?? 'U', 0, 1)) }}
-            </div>
-
-
         </div>
 
     </div>
 </nav>
 
-{{-- ░░░ HERO — FULL PAGE ░░░ --}}
+{{-- HERO --}}
 <section class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-slate-950">
-
-    {{-- Background image --}}
     <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80')] bg-cover bg-center opacity-10"></div>
-
-    {{-- Gradient overlays --}}
     <div class="absolute inset-0 bg-gradient-to-b from-slate-950/80 via-slate-950/50 to-slate-950"></div>
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_20%,_rgba(56,189,248,0.12)_0%,_transparent_70%)]"></div>
-
-    {{-- Animated grid --}}
     <div class="absolute inset-0 bg-[linear-gradient(rgba(56,189,248,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(56,189,248,0.03)_1px,transparent_1px)] bg-[size:64px_64px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_50%,black,transparent)]"></div>
-
-    {{-- Glow orbs --}}
     <div class="absolute top-1/3 left-1/4 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute bottom-1/3 right-1/4 w-96 h-96 bg-indigo-500/8 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute bottom-1/3 right-1/4 w-96 h-96 bg-indigo-500/[0.08] rounded-full blur-3xl pointer-events-none"></div>
 
-    @if($call)
-    <div class="absolute top-20 left-0 right-0 flex justify-center px-4 pt-4">
-
-        @if(!$call || !$call->status)
-        <div class="inline-flex items-center gap-2.5 bg-amber-400/[0.07] text-amber-300 border border-amber-400/15 px-4 py-2.5 rounded-2xl text-xs font-medium shadow-sm backdrop-blur-sm">
-            ⏳ Waiting for an agent to call you...
-        </div>
-
-        @elseif($call->status === 'calling')
-        <div class="inline-flex items-center gap-2.5 bg-sky-400/[0.07] text-sky-300 border border-sky-400/15 px-4 py-2.5 rounded-2xl text-xs font-medium shadow-sm backdrop-blur-sm">
-            📞 An agent is calling you...
-        </div>
-
-        @elseif($call->status === 'ongoing')
-        <div class="inline-flex items-center gap-2.5 bg-emerald-400/[0.07] text-emerald-300 border border-emerald-400/15 px-4 py-2.5 rounded-2xl text-xs font-medium shadow-sm backdrop-blur-sm">
-            ✅ Call in progress...
-        </div>
-
-        @elseif($call->status === 'ended')
-        <div class="inline-flex items-center gap-2.5 bg-gray-400/[0.07] text-gray-300 border border-gray-400/15 px-4 py-2.5 rounded-2xl text-xs font-medium shadow-sm backdrop-blur-sm">
-            📴 Call ended
-        </div>
-
-        @elseif($call->status === 'missed')
-        <div class="inline-flex items-center gap-2.5 bg-red-400/[0.07] text-red-300 border border-red-400/15 px-4 py-2.5 rounded-2xl text-xs font-medium shadow-sm backdrop-blur-sm">
-            ❌ Missed call
-        </div>
-        @endif
-
-    </div>
-    @endif
-
-    {{-- Hero Content --}}
     <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
-
         <span class="inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-[0.2em] uppercase text-sky-400 bg-sky-400/10 border border-sky-400/20 px-3.5 py-1.5 rounded-full mb-8">
             <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
             Professional Call Center Platform
@@ -130,7 +64,6 @@
             </a>
         </div>
 
-        {{-- Stats Row --}}
         <div class="inline-grid grid-cols-3 gap-px bg-white/[0.06] rounded-2xl overflow-hidden border border-white/[0.06] shadow-xl">
             <div class="bg-slate-950/80 backdrop-blur-sm px-8 py-5 text-center">
                 <p class="text-2xl font-bold text-white tracking-tight">99%</p>
@@ -145,24 +78,19 @@
                 <p class="text-[11px] text-slate-500 mt-0.5 tracking-wide">Support</p>
             </div>
         </div>
-
     </div>
 
-    {{-- Scroll cue --}}
     <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 text-slate-600">
         <span class="text-[10px] tracking-widest uppercase">Scroll</span>
         <svg class="w-4 h-4 animate-bounce" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="6 9 12 15 18 9" />
         </svg>
     </div>
-
 </section>
 
-{{-- ░░░ FEATURES SECTION ░░░ --}}
+{{-- FEATURES --}}
 <section id="features" class="bg-slate-950 py-24 px-6">
     <div class="max-w-5xl mx-auto">
-
-        {{-- Section Header --}}
         <div class="text-center mb-16">
             <span class="inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-[0.2em] uppercase text-indigo-400 bg-indigo-400/10 border border-indigo-400/20 px-3.5 py-1.5 rounded-full mb-4">
                 <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
@@ -172,9 +100,7 @@
             <p class="text-slate-500 text-sm mt-3 max-w-lg mx-auto">Built for clients who value speed, transparency, and professional service.</p>
         </div>
 
-        {{-- Feature Cards Grid --}}
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
             <div class="group relative bg-slate-900 rounded-2xl p-6 border border-white/[0.05] hover:border-sky-400/20 transition-all duration-300 overflow-hidden">
                 <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top-left,_rgba(56,189,248,0.05)_0%,_transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
                 <div class="w-10 h-10 rounded-xl bg-sky-400/10 border border-sky-400/20 flex items-center justify-center mb-4">
@@ -218,13 +144,11 @@
                 <h3 class="text-sm font-semibold text-white mb-1.5">Secure & Private</h3>
                 <p class="text-xs text-slate-500 leading-relaxed">All your data is encrypted and stored securely. Your privacy is our top priority.</p>
             </div>
-
         </div>
-
     </div>
 </section>
 
-{{-- ░░░ FOOTER ░░░ --}}
+{{-- FOOTER --}}
 <footer class="bg-slate-950 border-t border-white/[0.05] px-6 py-10">
     <div class="max-w-5xl mx-auto">
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-8">
