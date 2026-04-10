@@ -32,6 +32,6 @@ class callFedbackController extends Controller
             'rating' => $data['rating'],
         ]);
 
-        return redirect('/')->with('success', 'Feedback submitted successfully');
+        return redirect('home')->with('success', 'Feedback submitted successfully');
     }
 }

@@ -23,7 +23,8 @@ class User extends Authenticatable
         'password',
         'phone',
         'role',
-        'status'
+        'status',
+        'is_suspended',
     ];
 
     public function callLogs()

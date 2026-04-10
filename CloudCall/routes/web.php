@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgentController;
 use App\Http\Controllers\callFedbackController;
 use App\Http\Controllers\CallLogsController;
@@ -7,11 +8,12 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\heyController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RouteConroller;
+use App\Http\Controllers\SupervisorController;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('client-page');
+    return view('home');
 });
 
 Route::get('/catalog', [RouteConroller::class, 'catalog']);
@@ -23,8 +25,13 @@ Route::get('/loginForm', [LoginController::class, 'loginShow'])->name('login.for
 
 Route::get('/home', [ClientController::class, 'home'])->name('client.home');
 Route::get('/dashboard/agent', [AgentController::class, 'myclients'])->name('dashboard.agent');
-Route::view('/dashboard/supervisor', 'supervisor-dashboard')->name('dashboard.supervisor');
-Route::view('/dashboard/admin', 'admin-dashboard')->name('dashboard.admin');
+Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+
+Route::patch('/admin/users/{user}/suspend', [AdminController::class, 'suspend'])->name('admin.users.suspend');
+Route::patch('/admin/users/{user}/activate', [AdminController::class, 'activate'])->name('admin.users.activate');
+
+Route::post('/admin/reasons', [AdminController::class, 'storeReason'])->name('admin.reasons.store');
+Route::delete('/admin/reasons/{reason}', [AdminController::class, 'destroyReason'])->name('admin.reasons.destroy');
 Route::view('/client/callform', 'callform')->name('client.callform');
 Route::view('client', 'client-page')->name('client.page');
 
@@ -45,3 +52,5 @@ Route::post('/feedback/{call}', [callFedbackController::class, 'store'])
     ->name('feedback.store');
 
 Route::post('/call/{log}/end', [CallLogsController::class, 'endCall'])->name('call.end');
+
+Route::get('/supervisor/dashboard', [SupervisorController::class, 'dashboard'])->name('dashboard.supervisor');

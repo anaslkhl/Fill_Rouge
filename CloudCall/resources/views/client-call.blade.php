@@ -19,7 +19,8 @@
         <div class="hidden md:flex items-center gap-1">
             <a href="{{ route('client.home') }}" class="text-xs font-medium text-slate-400 hover:text-white px-3.5 py-2 rounded-lg hover:bg-white/[0.05] transition-all duration-150">Home</a>
             <a href="{{ route('client.callform') }}" class="text-xs font-medium text-slate-400 hover:text-white px-3.5 py-2 rounded-lg hover:bg-white/[0.05] transition-all duration-150">New Request</a>
-            <span class="text-xs font-medium text-white bg-white/[0.06] px-3.5 py-2 rounded-lg">My Call</span>
+            <a href="{{ route('client.call', $client->uuid) }}" class="text-xs font-medium text-slate-400 hover:text-white px-3.5 py-2 rounded-lg hover:bg-white/[0.05] transition-all duration-150">My call</a>
+
         </div>
 
         <div class="flex items-center gap-3">

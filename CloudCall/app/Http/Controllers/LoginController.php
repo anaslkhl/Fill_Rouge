@@ -58,7 +58,7 @@ class LoginController extends Controller
 
             $user = Auth::user();
             if ($user->role === 'agent') return redirect('/dashboard/agent');
-            if ($user->role === 'supervisor') return redirect('/dashboard/supervisor');
+            if ($user->role === 'supervisor') return redirect('/supervisor/dashboard');
             if ($user->role === 'admin') return redirect('/dashboard/admin');
 
             return redirect('/home');
@@ -76,6 +76,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('home');
     }
 }

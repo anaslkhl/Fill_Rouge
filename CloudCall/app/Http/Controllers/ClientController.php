@@ -47,19 +47,33 @@ class ClientController extends Controller
             return back()->with('error', 'No available agent');
         }
 
-        return redirect()->route('client.call', ['uuid' => $client->uuid]);
+        return redirect()->route('client.call', ['uuid' => $client->uuid])
+            ->cookie('client_uuid', $client->uuid, 60 * 24 * 30);
     }
 
 
-    public function show(Client $client)
+    public function show($uuid, Request $request)
     {
-        $client->load('callLogs');
-        return view('client.show', compact('client'));
+        $clientUuid = $request->cookie('client_uuid');
+
+        $client = Client::where('uuid', $uuid)
+            ->where('uuid', $clientUuid)
+            ->firstOrFail();
+
+        return view('client.call', compact('client'));
     }
 
-    public function home()
+    public function home(Request $request)
     {
-        return view('client-page');
+        $clientUuid = $request->cookie('client_uuid');
+
+        $client = null;
+
+        if ($clientUuid) {
+            $client = Client::where('uuid', $clientUuid)->first();
+        }
+
+        return view('client-page', compact('client'));
     }
 
     public function call($uuid)
