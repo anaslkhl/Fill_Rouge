@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CallLogs;
 use App\Models\Client;
 use App\Models\User;
+use CallStatusUpdated;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -50,6 +51,7 @@ class CallLogsController extends Controller
                 'status' => 'oncall'
             ]);
         });
+        broadcast(new CallStatusUpdated($call));
 
         return back()->with('success', 'Call started');
     }
@@ -68,6 +70,7 @@ class CallLogsController extends Controller
         $agent->update([
             'status' => 'online'
         ]);
+        broadcast(new CallStatusUpdated($log));
         return redirect()->back()->with('success', 'Call Updated');
     }
 

@@ -4,7 +4,6 @@
 
     <h2 class="text-2xl font-bold mb-6">CloudCall</h2>
 
-    <!-- Navigation -->
     <nav class="space-y-4">
 
         @if(auth()->user()->role === 'admin')
@@ -21,7 +20,6 @@
 
     </nav>
 
-    <!-- User Card -->
     <div class="mt-6 p-4 rounded-xl bg-slate-800 shadow-md">
 
         <div class="flex items-center gap-3 mb-3">
@@ -45,7 +43,6 @@
             <p>Phone: {{ auth()->user()->phone ?? 'Not provided' }}</p>
         </div>
 
-        <!-- ✅ Logout Button -->
         <form method="POST" action="{{ route('user.logout') }}">
             @csrf
             <button type="submit"
@@ -59,18 +56,3 @@
 </aside>
 @endif
 @endauth
-
-
-@guest
-<!-- ✅ Login Button (when NOT logged in) -->
-<aside class="fixed top-0 left-0 w-64 h-full bg-slate-900 p-6 text-white flex flex-col justify-center items-center">
-
-    <h2 class="text-2xl font-bold mb-6">CloudCall</h2>
-
-    <a href="{{ route('user.login') }}"
-        class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded">
-        Login
-    </a>
-
-</aside>
-@endguest

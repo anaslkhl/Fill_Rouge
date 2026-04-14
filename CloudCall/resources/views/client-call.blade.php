@@ -23,35 +23,10 @@
 
         </div>
 
-        <div class="flex items-center gap-3">
-            {{-- Live status pill in navbar --}}
+        <div id="nav-status" class="flex items-center gap-3">
             @if($call)
-            @if($call->status === 'calling')
-            <span class="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase text-sky-300 bg-sky-400/10 border border-sky-400/20 px-2.5 py-1 rounded-full">
-                <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
-                In Call
-            </span>
-            @elseif($call->status === 'ongoing')
-            <span class="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase text-emerald-300 bg-emerald-400/10 border border-emerald-400/20 px-2.5 py-1 rounded-full">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                Ongoing
-            </span>
-            @elseif($call->status === 'ended')
-            <span class="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase text-slate-300 bg-slate-400/10 border border-slate-400/20 px-2.5 py-1 rounded-full">
-                <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                Ended
-            </span>
-            @elseif($call->status === 'missed')
-            <span class="hidden sm:inline-flex items-center gap-1.5 text-[10px] font-semibold tracking-wider uppercase text-red-300 bg-red-400/10 border border-red-400/20 px-2.5 py-1 rounded-full">
-                <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
-                Missed
-            </span>
+            <span class="text-slate-400 text-xs">Loading status...</span>
             @endif
-            @endif
-
-            <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-slate-700 to-slate-800 border border-white/10 flex items-center justify-center text-xs font-bold text-slate-300">
-                {{ strtoupper(substr($client->name ?? 'U', 0, 1)) }}
-            </div>
         </div>
 
     </div>
@@ -121,77 +96,8 @@
         </div>
 
         {{-- ── CALL STATUS CARD ── --}}
-        <div class="relative bg-slate-900/90 backdrop-blur-sm rounded-3xl border border-white/[0.06] shadow-2xl overflow-hidden">
-            <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-400/40 to-transparent"></div>
-            <div class="relative p-6">
-                <div class="flex items-center gap-2.5 mb-5">
-                    <span class="w-2 h-2 rounded-full bg-indigo-400 shadow-[0_0_8px_2px_rgba(99,102,241,0.5)]"></span>
-                    <h2 class="text-[0.68rem] font-bold tracking-[0.15em] uppercase text-slate-400">Call Status</h2>
-                </div>
-
-                @if(!$call)
-                {{-- No call exists --}}
-                <div class="flex items-center gap-4 bg-amber-400/[0.06] border border-amber-400/15 rounded-2xl px-5 py-4">
-                    <div class="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-lg flex-shrink-0">⏳</div>
-                    <div>
-                        <p class="text-sm font-semibold text-amber-300">Waiting for an agent...</p>
-                        <p class="text-xs text-amber-400/60 mt-0.5">Your request has been received. An agent will call you shortly.</p>
-                    </div>
-                </div>
-
-                @elseif($call->status === 'calling')
-                <div class="flex items-center gap-4 bg-sky-400/[0.06] border border-sky-400/15 rounded-2xl px-5 py-4">
-                    <div class="w-10 h-10 rounded-xl bg-sky-400/10 border border-sky-400/20 flex items-center justify-center text-lg flex-shrink-0 animate-pulse">📞</div>
-                    <div>
-                        <p class="text-sm font-semibold text-sky-300">An agent is calling you...</p>
-                        <p class="text-xs text-sky-400/60 mt-0.5">Please pick up your phone. The agent is waiting for you.</p>
-                    </div>
-                </div>
-
-                @elseif($call->status === 'ongoing')
-                <div class="flex items-center gap-4 bg-emerald-400/[0.06] border border-emerald-400/15 rounded-2xl px-5 py-4">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center text-lg flex-shrink-0">✅</div>
-                    <div>
-                        <p class="text-sm font-semibold text-emerald-300">Call in progress...</p>
-                        <p class="text-xs text-emerald-400/60 mt-0.5">Your call is currently active with one of our agents.</p>
-                    </div>
-                </div>
-
-                @elseif($call->status === 'ended')
-                <div class="flex items-center gap-4 bg-slate-400/[0.06] border border-slate-400/15 rounded-2xl px-5 py-4">
-                    <div class="w-10 h-10 rounded-xl bg-slate-400/10 border border-slate-400/20 flex items-center justify-center text-lg flex-shrink-0">📴</div>
-                    <div>
-                        <p class="text-sm font-semibold text-slate-300">Call ended</p>
-                        <p class="text-xs text-slate-500 mt-0.5">Your call has been completed. Thank you for using CloudCall.</p>
-                    </div>
-                </div>
-
-                @elseif($call->status === 'missed')
-                <div class="flex items-center gap-4 bg-red-400/[0.06] border border-red-400/15 rounded-2xl px-5 py-4">
-                    <div class="w-10 h-10 rounded-xl bg-red-400/10 border border-red-400/20 flex items-center justify-center text-lg flex-shrink-0">❌</div>
-                    <div>
-                        <p class="text-sm font-semibold text-red-300">Missed call</p>
-                        <p class="text-xs text-red-400/60 mt-0.5">We tried to reach you but couldn't. Please submit a new request.</p>
-                    </div>
-                </div>
-                @endif
-
-                {{-- Call meta info --}}
-                @if($call)
-                <div class="mt-4 flex items-center justify-between px-1">
-                    <span class="text-[11px] text-slate-600 flex items-center gap-1.5">
-                        <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="10" />
-                            <polyline points="12 6 12 12 16 14" />
-                        </svg>
-                        Submitted {{ $call->created_at->diffForHumans() }}
-                    </span>
-                    <span class="text-[11px] text-slate-600">
-                        {{ $call->created_at->format('M d, Y · H:i') }}
-                    </span>
-                </div>
-                @endif
-
+        <div id="call-status-container" class="relative bg-slate-900/90 backdrop-blur-sm rounded-3xl border border-white/[0.06] shadow-2xl overflow-hidden">
+            <div id="call-status-content" class="relative p-6">
             </div>
         </div>
 
@@ -288,5 +194,85 @@
         </div>
     </div>
 </footer>
+
+<script>
+    function updateCallUI(status) {
+
+        const statusContainer = document.getElementById('call-status-content');
+
+        if (status === 'calling') {
+            statusContainer.innerHTML = `
+            <div class="flex items-center gap-4 bg-sky-400/[0.06] border border-sky-400/15 rounded-2xl px-5 py-4">
+                <div class="w-10 h-10 rounded-xl bg-sky-400/10 border border-sky-400/20 flex items-center justify-center animate-pulse">📞</div>
+                <div>
+                    <p class="text-sm font-semibold text-sky-300">An agent is calling you...</p>
+                </div>
+            </div>`;
+        }
+
+        if (status === 'ongoing') {
+            statusContainer.innerHTML = `
+            <div class="flex items-center gap-4 bg-emerald-400/[0.06] border border-emerald-400/15 rounded-2xl px-5 py-4">
+                <div class="w-10 h-10 rounded-xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center">✅</div>
+                <div>
+                    <p class="text-sm font-semibold text-emerald-300">Call in progress...</p>
+                </div>
+            </div>`;
+        }
+
+        if (status === 'ended') {
+            statusContainer.innerHTML = `
+            <div class="flex items-center gap-4 bg-slate-400/[0.06] border border-slate-400/15 rounded-2xl px-5 py-4">
+                <div class="w-10 h-10 rounded-xl bg-slate-400/10 border border-slate-400/20 flex items-center justify-center">📴</div>
+                <div>
+                    <p class="text-sm font-semibold text-slate-300">Call ended</p>
+                </div>
+            </div>`;
+        }
+
+        if (status === 'missed') {
+            statusContainer.innerHTML = `
+            <div class="flex items-center gap-4 bg-red-400/[0.06] border border-red-400/15 rounded-2xl px-5 py-4">
+                <div class="w-10 h-10 rounded-xl bg-red-400/10 border border-red-400/20 flex items-center justify-center">❌</div>
+                <div>
+                    <p class="text-sm font-semibold text-red-300">Missed call</p>
+                </div>
+            </div>`;
+        }
+
+
+        const nav = document.getElementById('nav-status');
+
+        let badge = '';
+
+        if (status === 'calling') {
+            badge = `<span class="text-sky-300 text-xs">📞 In Call</span>`;
+        }
+
+        if (status === 'ongoing') {
+            badge = `<span class="text-emerald-300 text-xs">✅ Ongoing</span>`;
+        }
+
+        if (status === 'ended') {
+            badge = `<span class="text-slate-300 text-xs">📴 Ended</span>`;
+        }
+
+        if (status === 'missed') {
+            badge = `<span class="text-red-300 text-xs">❌ Missed</span>`;
+        }
+
+        nav.innerHTML = badge;
+    }
+
+
+
+    if (!window.Echo) {
+        console.error('Echo is not initialized');
+    } else {
+        window.Echo.private(`call.${clientId}`).listen('.call.status.updated', (e) => {
+            updateCallUI(e.status);
+        });
+    }
+</script>
 
 @endsection

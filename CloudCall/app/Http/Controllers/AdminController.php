@@ -45,30 +45,30 @@ class AdminController extends Controller
     /**
      * Add a new call-end reason.
      */
-    // public function storeReason(Request $request)
-    // {
-    //     $request->validate([
-    //         'label' => 'required|string|max:120|unique:call_reasons,label',
-    //         'category' => 'nullable|string|in:resolved,unresolved,canceled,other',
-    //         'description' => 'nullable|string|max:500',
-    //     ]);
+    public function storeReason(Request $request)
+    {
+        $request->validate([
+            'label' => 'required|string|max:120|unique:call_reasons,label',
+            'category' => 'nullable|string|in:resolved,unresolved,canceled,other',
+            'description' => 'nullable|string|max:500',
+        ]);
 
-    //     CallReason::create([
-    //         'label' => trim($request->label),
-    //         'category' => $request->category ?? 'other',
-    //         'description' => $request->description,
-    //     ]);
+        CallReason::create([
+            'label' => trim($request->label),
+            'category' => $request->category ?? 'other',
+            'description' => $request->description,
+        ]);
 
-    //     return back()->with('success', 'Call-end reason added successfully.');
-    // }
+        return back()->with('success', 'Call-end reason added successfully.');
+    }
 
     /**
      * Remove a call-end reason.
      */
-    // public function destroyReason(CallReason $reason)
-    // {
-    //     $reason->delete();
+    public function destroyReason(CallReason $reason)
+    {
+        $reason->delete();
 
-    //     return back()->with('success', 'Reason removed.');
-    // }
+        return back()->with('success', 'Reason removed.');
+    }
 }
