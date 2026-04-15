@@ -69,7 +69,7 @@
         </div>
 
         {{-- ── STATS ROW ── --}}
-        <div class="grid grid-cols-3 gap-3">
+        <div class="grid grid-cols-4 gap-3">
             <div class="relative bg-slate-900/90 rounded-2xl border border-white/[0.06] p-4 overflow-hidden">
                 <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sky-400/30 to-transparent"></div>
                 <p class="text-[0.65rem] font-semibold tracking-widest uppercase text-slate-600 mb-1">Total Calls</p>
@@ -79,6 +79,11 @@
                 <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent"></div>
                 <p class="text-[0.65rem] font-semibold tracking-widest uppercase text-slate-600 mb-1">Resolved</p>
                 <p class="text-2xl font-bold text-emerald-400 tracking-tight">{{ $callLogs->where('result', 'resolved')->count() }}</p>
+            </div>
+            <div class="relative bg-slate-900/90 rounded-2xl border border-white/[0.06] p-4 overflow-hidden">
+                <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/30 to-transparent"></div>
+                <p class="text-[0.65rem] font-semibold tracking-widest uppercase text-slate-600 mb-1">Unresolved</p>
+                <p class="text-2xl font-bold text-emerald-400 tracking-tight">{{ $callLogs->where('result', 'unresolved')->count() }}</p>
             </div>
             <div class="relative bg-slate-900/90 rounded-2xl border border-white/[0.06] p-4 overflow-hidden">
                 <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-400/30 to-transparent"></div>
@@ -116,12 +121,14 @@
                         </div>
                         <form action="{{ route('call.start', $call->id) }}" method="POST">
                             @csrf
+                            @if($call->status === 'calling')
                             <button class="inline-flex items-center gap-1.5 bg-gradient-to-br from-green-600 to-green-700 hover:brightness-110 text-white text-xs font-semibold px-3.5 py-2 rounded-lg shadow-[0_4px_12px_rgba(22,163,74,0.35)] hover:shadow-[0_6px_18px_rgba(22,163,74,0.45)] hover:-translate-y-px transition-all duration-150">
                                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                                     <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
                                 </svg>
                                 Call
                             </button>
+                            @endif
                         </form>
                     </li>
                 </ul>

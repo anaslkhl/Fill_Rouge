@@ -26,6 +26,13 @@ class AgentController extends Controller
             ->latest()
             ->get();
 
+        // $stats = [
+        //     'total'       => $callLogs->count(),
+        //     'resolved'    => $callLogs->where('result', 'resolved')->count(),
+        //     'unresolved'  => $callLogs->where('result', 'unresolved')->count(),
+        //     'missed'      => $callLogs->where('status', 'missed')->count(),
+        // ];
+
         return view('agent-dashboard', compact('call', 'callLogs'));
     }
 }

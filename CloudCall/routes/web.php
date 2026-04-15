@@ -40,8 +40,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['admin'])->group(
         function () {
-            Route::get('/dashboard', [RouteConroller::class, 'dashboard']);
-            Route::get('/dashboard/admin', [AdminController::class, 'index'])->name('admin.dashboard');
+            Route::get('/dashboard', [AdminController::class, 'dashboard']);
+            Route::get('/dashboard/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
             Route::patch('/admin/users/{user}/suspend', [AdminController::class, 'suspend'])->name('admin.users.suspend');
             Route::patch('/admin/users/{user}/activate', [AdminController::class, 'activate'])->name('admin.users.activate');
             Route::post('/admin/reasons', [AdminController::class, 'storeReason'])->name('admin.reasons.store');

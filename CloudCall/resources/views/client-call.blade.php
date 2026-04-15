@@ -98,6 +98,205 @@
         {{-- ── CALL STATUS CARD ── --}}
         <div id="call-status-container" class="relative bg-slate-900/90 backdrop-blur-sm rounded-3xl border border-white/[0.06] shadow-2xl overflow-hidden">
             <div id="call-status-content" class="relative p-6">
+
+                {{-- ── Section Header ── --}}
+                <div class="flex items-center gap-2.5 mb-5">
+                    <span class="w-2 h-2 rounded-full
+      @if($call?->status === 'calling') bg-sky-400 shadow-[0_0_8px_2px_rgba(56,189,248,0.5)]
+      @elseif($call?->status === 'ongoing') bg-emerald-400 shadow-[0_0_8px_2px_rgba(52,211,153,0.5)]
+      @elseif($call?->status === 'missed') bg-rose-400
+      @else bg-slate-500 @endif">
+                    </span>
+                    <h2 class="text-[0.68rem] font-bold tracking-[0.15em] uppercase text-slate-400">Call Status</h2>
+                </div>
+
+                @if(!$call)
+                {{-- No call --}}
+                <div class="flex items-center gap-4">
+                    <div class="w-13 h-13 rounded-full bg-white/[0.03] border border-white/[0.06] flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-slate-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-slate-300">No active call</p>
+                        <p class="text-xs text-slate-500 mt-0.5">You have not submitted a call request yet.</p>
+                    </div>
+                </div>
+
+                @elseif($call->status === 'calling')
+                {{-- Top line --}}
+                <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-sky-400/40 to-transparent"></div>
+                <div class="flex items-center gap-4">
+                    <div class="relative w-13 h-13 rounded-full bg-sky-400/10 border border-sky-400/20 flex items-center justify-center flex-shrink-0">
+                        <div class="absolute inset-[-6px] rounded-full border border-sky-400/25 animate-ping"></div>
+                        <svg class="w-5 h-5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.15em] uppercase text-sky-400 bg-sky-400/10 border border-sky-400/20 px-2.5 py-1 rounded-full mb-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>Calling
+                        </span>
+                        <p class="text-sm font-semibold text-slate-200">Connecting to an agent</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Please stay on the line. An agent will answer shortly.</p>
+                    </div>
+                    <div class="flex gap-1 items-center flex-shrink-0">
+                        <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-bounce [animation-delay:0ms]"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-bounce [animation-delay:150ms]"></span>
+                        <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-bounce [animation-delay:300ms]"></span>
+                    </div>
+                </div>
+
+                @elseif($call->status === 'ongoing')
+                <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent"></div>
+                <div class="flex items-center gap-4">
+                    <div class="w-13 h-13 rounded-full bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
+                        </svg>
+                    </div>
+                    <div class="flex-1">
+                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.15em] uppercase text-emerald-400 bg-emerald-400/10 border border-emerald-400/20 px-2.5 py-1 rounded-full mb-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>Ongoing
+                        </span>
+                        <p class="text-sm font-semibold text-slate-200">Call in progress</p>
+                        <p class="text-xs text-slate-500 mt-0.5">You're connected with an agent right now.</p>
+                    </div>
+                </div>
+
+                @elseif($call->status === 'missed')
+                <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-rose-400/40 to-transparent"></div>
+                <div class="flex items-center gap-4">
+                    <div class="w-13 h-13 rounded-full bg-rose-400/10 border border-rose-400/20 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M10.68 13.31a16 16 0 003.41 2.6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.42 19.42 0 01-3.33-2.67" />
+                            <line x1="1" y1="1" x2="23" y2="23" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.15em] uppercase text-rose-400 bg-rose-400/10 border border-rose-400/20 px-2.5 py-1 rounded-full mb-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>Missed
+                        </span>
+                        <p class="text-sm font-semibold text-slate-200">Call was missed</p>
+                        <p class="text-xs text-slate-500 mt-0.5">No agent was available. Please submit a new request.</p>
+                    </div>
+                </div>
+
+                @elseif($call->status === 'ended')
+                <div class="flex items-center gap-4">
+                    <div class="w-13 h-13 rounded-full bg-white/[0.03] border border-white/[0.06] flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 text-[10px] font-bold tracking-[0.15em] uppercase text-slate-500 bg-white/[0.03] border border-white/[0.06] px-2.5 py-1 rounded-full mb-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-slate-500"></span>Ended
+                        </span>
+                        <p class="text-sm font-semibold text-slate-200">Call has ended</p>
+                        <p class="text-xs text-slate-500 mt-0.5">Your call was completed. We hope we were able to help!</p>
+                    </div>
+                </div>
+                @endif
+
+                {{-- ── Progress Steps ── --}}
+                @if($call)
+                <div class="mt-6 pt-5 border-t border-white/[0.05]">
+                    <div class="flex items-start">
+
+                        {{-- Step: Submitted --}}
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="relative flex items-center justify-center w-7 h-7 rounded-full border bg-slate-950
+          {{ in_array($call->status, ['calling','ongoing','ended','missed']) ? 'border-emerald-400/50' : 'border-white/[0.08]' }}">
+                                @if(in_array($call->status, ['calling','ongoing','ended','missed']))
+                                <svg class="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                                @endif
+                                {{-- connector --}}
+                                <div class="absolute top-3.5 left-full w-full h-px
+            {{ in_array($call->status, ['calling','ongoing','ended','missed']) ? 'bg-emerald-400/30' : 'bg-white/[0.06]' }}">
+                                </div>
+                            </div>
+                            <span class="mt-2 text-[10px] font-semibold tracking-wide
+          {{ in_array($call->status, ['calling','ongoing','ended','missed']) ? 'text-emerald-400' : 'text-slate-600' }}">
+                                Submitted
+                            </span>
+                        </div>
+
+                        {{-- Step: Calling --}}
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="relative flex items-center justify-center w-7 h-7 rounded-full border bg-slate-950
+          {{ $call->status === 'calling' ? 'border-sky-400/60 ring-2 ring-sky-400/10' : (in_array($call->status, ['ongoing','ended']) ? 'border-emerald-400/50' : ($call->status === 'missed' ? 'border-rose-400/50' : 'border-white/[0.08]')) }}">
+                                @if(in_array($call->status, ['ongoing','ended']))
+                                <svg class="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                                @elseif($call->status === 'calling')
+                                <svg class="w-2.5 h-2.5 text-sky-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z" />
+                                </svg>
+                                @elseif($call->status === 'missed')
+                                <svg class="w-2.5 h-2.5 text-rose-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8">
+                                    <line x1="18" y1="6" x2="6" y2="18" />
+                                    <line x1="6" y1="6" x2="18" y2="18" />
+                                </svg>
+                                @endif
+                                <div class="absolute top-3.5 left-full w-full h-px
+            {{ in_array($call->status, ['ongoing','ended']) ? 'bg-emerald-400/30' : 'bg-white/[0.06]' }}">
+                                </div>
+                            </div>
+                            <span class="mt-2 text-[10px] font-semibold tracking-wide
+          {{ $call->status === 'calling' ? 'text-sky-400' : (in_array($call->status, ['ongoing','ended']) ? 'text-emerald-400' : ($call->status === 'missed' ? 'text-rose-400' : 'text-slate-600')) }}">
+                                Calling
+                            </span>
+                        </div>
+
+                        {{-- Step: Ongoing --}}
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="relative flex items-center justify-center w-7 h-7 rounded-full border bg-slate-950
+          {{ $call->status === 'ongoing' ? 'border-emerald-400/60 ring-2 ring-emerald-400/10' : ($call->status === 'ended' ? 'border-emerald-400/50' : 'border-white/[0.08]') }}">
+                                @if($call->status === 'ended')
+                                <svg class="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                                @elseif($call->status === 'ongoing')
+                                <svg class="w-2.5 h-2.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <polyline points="12 6 12 12 16 14" />
+                                </svg>
+                                @endif
+                                <div class="absolute top-3.5 left-full w-full h-px
+            {{ $call->status === 'ended' ? 'bg-emerald-400/30' : 'bg-white/[0.06]' }}">
+                                </div>
+                            </div>
+                            <span class="mt-2 text-[10px] font-semibold tracking-wide
+          {{ $call->status === 'ongoing' ? 'text-emerald-400' : ($call->status === 'ended' ? 'text-emerald-400' : 'text-slate-600') }}">
+                                Ongoing
+                            </span>
+                        </div>
+
+                        {{-- Step: Ended --}}
+                        <div class="flex flex-col items-center flex-1">
+                            <div class="flex items-center justify-center w-7 h-7 rounded-full border bg-slate-950
+          {{ $call->status === 'ended' ? 'border-emerald-400/50' : 'border-white/[0.08]' }}">
+                                @if($call->status === 'ended')
+                                <svg class="w-3 h-3 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                                @endif
+                            </div>
+                            <span class="mt-2 text-[10px] font-semibold tracking-wide
+          {{ $call->status === 'ended' ? 'text-emerald-400' : 'text-slate-600' }}">
+                                Ended
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+                @endif
+
             </div>
         </div>
 
@@ -195,84 +394,5 @@
     </div>
 </footer>
 
-<script>
-    function updateCallUI(status) {
-
-        const statusContainer = document.getElementById('call-status-content');
-
-        if (status === 'calling') {
-            statusContainer.innerHTML = `
-            <div class="flex items-center gap-4 bg-sky-400/[0.06] border border-sky-400/15 rounded-2xl px-5 py-4">
-                <div class="w-10 h-10 rounded-xl bg-sky-400/10 border border-sky-400/20 flex items-center justify-center animate-pulse">📞</div>
-                <div>
-                    <p class="text-sm font-semibold text-sky-300">An agent is calling you...</p>
-                </div>
-            </div>`;
-        }
-
-        if (status === 'ongoing') {
-            statusContainer.innerHTML = `
-            <div class="flex items-center gap-4 bg-emerald-400/[0.06] border border-emerald-400/15 rounded-2xl px-5 py-4">
-                <div class="w-10 h-10 rounded-xl bg-emerald-400/10 border border-emerald-400/20 flex items-center justify-center">✅</div>
-                <div>
-                    <p class="text-sm font-semibold text-emerald-300">Call in progress...</p>
-                </div>
-            </div>`;
-        }
-
-        if (status === 'ended') {
-            statusContainer.innerHTML = `
-            <div class="flex items-center gap-4 bg-slate-400/[0.06] border border-slate-400/15 rounded-2xl px-5 py-4">
-                <div class="w-10 h-10 rounded-xl bg-slate-400/10 border border-slate-400/20 flex items-center justify-center">📴</div>
-                <div>
-                    <p class="text-sm font-semibold text-slate-300">Call ended</p>
-                </div>
-            </div>`;
-        }
-
-        if (status === 'missed') {
-            statusContainer.innerHTML = `
-            <div class="flex items-center gap-4 bg-red-400/[0.06] border border-red-400/15 rounded-2xl px-5 py-4">
-                <div class="w-10 h-10 rounded-xl bg-red-400/10 border border-red-400/20 flex items-center justify-center">❌</div>
-                <div>
-                    <p class="text-sm font-semibold text-red-300">Missed call</p>
-                </div>
-            </div>`;
-        }
-
-
-        const nav = document.getElementById('nav-status');
-
-        let badge = '';
-
-        if (status === 'calling') {
-            badge = `<span class="text-sky-300 text-xs">📞 In Call</span>`;
-        }
-
-        if (status === 'ongoing') {
-            badge = `<span class="text-emerald-300 text-xs">✅ Ongoing</span>`;
-        }
-
-        if (status === 'ended') {
-            badge = `<span class="text-slate-300 text-xs">📴 Ended</span>`;
-        }
-
-        if (status === 'missed') {
-            badge = `<span class="text-red-300 text-xs">❌ Missed</span>`;
-        }
-
-        nav.innerHTML = badge;
-    }
-
-
-
-    if (!window.Echo) {
-        console.error('Echo is not initialized');
-    } else {
-        window.Echo.private(`call.${clientId}`).listen('.call.status.updated', (e) => {
-            updateCallUI(e.status);
-        });
-    }
-</script>
 
 @endsection

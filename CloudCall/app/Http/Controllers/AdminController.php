@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CallLogs;
 use App\Models\CallReason;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    // ── Dashboard Overview ──────────────────────────────────────────────────
     public function index()
     {
         $users = User::where('role', '!=', 'admin')->get();
@@ -16,11 +17,9 @@ class AdminController extends Controller
         return view('admin-dashboard', compact('users'));
     }
 
-    // ── User Management ─────────────────────────────────────────────────────
 
-    /**
-     * Suspend an agent or supervisor account.
-     */
+
+
     public function suspend(User $user)
     {
         abort_if($user->role === 'admin', 403, 'Cannot suspend an admin account.');
@@ -30,9 +29,6 @@ class AdminController extends Controller
         return back()->with('success', "Account '{$user->name}' has been suspended.");
     }
 
-    /**
-     * Reactivate a previously suspended account.
-     */
     public function activate(User $user)
     {
         $user->update(['is_suspended' => false]);
@@ -40,11 +36,7 @@ class AdminController extends Controller
         return back()->with('success', "Account '{$user->name}' is now active.");
     }
 
-    // ── Business Config — Qualification List ────────────────────────────────
 
-    /**
-     * Add a new call-end reason.
-     */
     public function storeReason(Request $request)
     {
         $request->validate([
@@ -62,9 +54,32 @@ class AdminController extends Controller
         return back()->with('success', 'Call-end reason added successfully.');
     }
 
-    /**
-     * Remove a call-end reason.
-     */
+    public function dashboard()
+    {
+        $users = User::all();
+        $totalUsers = $users->count();
+        $agentCount = $users->where('role', 'agent')->count();
+        $supervisorCount = $users->where('role', 'supervisor')->count();
+
+        $callsToday = CallLogs::whereDate('created_at', now()->toDateString())->count();
+
+        $errorCount = DB::table('failed_jobs')->count(); // Example: replace with your actual error tracking
+
+
+        $activeSessions = DB::table('sessions')->where('last_activity', '>', now()->subMinutes(5)->getTimestamp())->count();
+
+        return view('admin-dashboard', compact(
+            'users',
+            'totalUsers',
+            'agentCount',
+            'supervisorCount',
+            'callsToday',
+            'errorCount',
+            'activeSessions'
+        ));
+    }
+
+
     public function destroyReason(CallReason $reason)
     {
         $reason->delete();

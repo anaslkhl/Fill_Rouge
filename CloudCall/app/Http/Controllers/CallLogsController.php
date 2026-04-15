@@ -51,7 +51,6 @@ class CallLogsController extends Controller
                 'status' => 'oncall'
             ]);
         });
-        broadcast(new CallStatusUpdated($call));
 
         return back()->with('success', 'Call started');
     }
@@ -70,7 +69,6 @@ class CallLogsController extends Controller
         $agent->update([
             'status' => 'online'
         ]);
-        broadcast(new CallStatusUpdated($log));
         return redirect()->back()->with('success', 'Call Updated');
     }
 
