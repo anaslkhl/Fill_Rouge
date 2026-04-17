@@ -8,7 +8,9 @@
 
         @if(auth()->user()->role === 'admin')
         <a href="{{ route('admin.dashboard') }}" class="block py-2 px-4 rounded hover:bg-slate-800">Admin Dashboard</a>
-        @endif
+        <a href="{{ route('login.form') }}" class="text-xs font-medium text-white bg-white/[0.06] px-3.5 py-2 rounded-lg">+ Add user</a>
+
+        @endif 
 
         @if(auth()->user()->role === 'agent')
         <a href="{{ route('dashboard.agent') }}" class="block py-2 px-4 rounded hover:bg-slate-800">Agent Dashboard</a>
@@ -51,7 +53,9 @@
             </button>
         </form>
 
+
     </div>
+
 
 </aside>
 @endif
