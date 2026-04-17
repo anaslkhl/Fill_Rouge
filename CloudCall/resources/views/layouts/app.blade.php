@@ -10,7 +10,11 @@
 </head>
 
 <body class="bg-slate-950 text-white font-sans">
+    @if(auth()->user()->role === 'admin')
+    @include('partials.admin-navbar')
+    @else
     @include('partials.sidebar')
+    @endif
     <div class="ml-64 min-h-screen flex flex-col">
         @include('partials.header')
         <main class="flex-1 p-6 space-y-6 mr-[15rem]">
