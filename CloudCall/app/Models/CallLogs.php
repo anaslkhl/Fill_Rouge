@@ -19,7 +19,7 @@ class CallLogs extends Model
     public static function startCall(Client $client)
     {
 
-        $agent = User::where('role', 'agent')->where('status', 'online')->first();
+        $agent = User::where('role', 'agent')->where('status', 'online')->inRandomOrder()->first();
 
 
         if (!$agent) {

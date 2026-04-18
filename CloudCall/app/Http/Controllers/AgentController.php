@@ -11,28 +11,86 @@ class AgentController extends Controller
     //
 
 
-    public function myclients()
+    private function activeCall(): ?CallLogs
     {
-        $agentId = Auth::id();
-
-        $call = CallLogs::with('client')
-            ->where('user_id', $agentId)
+        return CallLogs::with('client')
+            ->where('user_id', Auth::id())
             ->whereIn('status', ['calling', 'ongoing'])
             ->latest()
             ->first();
+    }
 
-        $callLogs = CallLogs::with('client')
-            ->where('user_id', $agentId)
+
+    private function allLogs()
+    {
+        return CallLogs::with('client')
+            ->where('user_id', Auth::id())
             ->latest()
             ->get();
+    }
+ 
+  
+    
+    public function dashboard()
+    {
+        $call     = $this->activeCall();
+        $callLogs = $this->allLogs();
 
-        // $stats = [
-        //     'total'       => $callLogs->count(),
-        //     'resolved'    => $callLogs->where('result', 'resolved')->count(),
-        //     'unresolved'  => $callLogs->where('result', 'unresolved')->count(),
-        //     'missed'      => $callLogs->where('status', 'missed')->count(),
-        // ];
+        $totalCalls      = $callLogs->count();
+        $resolvedCalls   = $callLogs->where('result', 'resolved')->count();
+        $unresolvedCalls = $callLogs->where('result', 'unresolved')->count();
+        $missedCalls     = $callLogs->where('status', 'missed')->count();
 
-        return view('agent-dashboard', compact('call', 'callLogs'));
+        $recentCalls = $callLogs->take(5);
+
+        return view('agent-dashboard', compact(
+            'call',
+            'totalCalls',
+            'resolvedCalls',
+            'unresolvedCalls',
+            'missedCalls',
+            'recentCalls',
+            'callLogs'
+        ));
+    }
+
+   
+    public function incoming()
+    {
+        $call = $this->activeCall();
+
+        return view('incoming', compact('call'));
+    }
+
+    public function logCall()
+    {
+        $call = $this->activeCall();
+
+        return view('log-call', compact('call'));
+    }
+
+   
+    public function history()
+    {
+        $callLogs = $this->allLogs();
+
+        $totalCalls      = $callLogs->count();
+        $resolvedCalls   = $callLogs->where('result', 'resolved')->count();
+        $unresolvedCalls = $callLogs->where('result', 'unresolved')->count();
+        $missedCalls     = $callLogs->where('status', 'missed')->count();
+
+        return view('history', compact(
+            'callLogs',
+            'totalCalls',
+            'resolvedCalls',
+            'unresolvedCalls',
+            'missedCalls',
+        ));
+    }
+ 
+   
+    public function myclients()
+    {
+        return $this->dashboard();
     }
 }

@@ -22,8 +22,7 @@ Route::get('/', [ClientController::class, 'home'])->name('client.home');
 Route::get('/loginForm', [LoginController::class, 'loginShow'])->name('login.form');
 Route::post('/user/login', [LoginController::class, 'login'])->name('user.login');
 Route::get('/home', [ClientController::class, 'home'])->name('client.home');
-Route::get('/catalog', [RouteConroller::class, 'catalog']);
-Route::post('/user/logout', [LoginController::class, 'logout'])->name('user.logout');
+Route::get('/user/logout', [LoginController::class, 'logout'])->name('user.logout');
 Route::view('/client/callform', 'callform')->name('client.callform');
 Route::view('client', 'client-page')->name('client.page');
 Route::post('/client/store', [ClientController::class, 'store'])->name('client.store');
@@ -51,16 +50,18 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['agent'])->group(
         function () {
-            Route::get('/dashboard/agent', [AgentController::class, 'myclients'])->name('dashboard.agent');
             Route::get('/agent/call', [AgentController::class, 'myclients'])->name('agent.call');
-
             Route::post('/call/{log}/end', [CallLogsController::class, 'endCall'])->name('call.end');
+            Route::get('/dashboard/agent', [AgentController::class, 'dashboard'])->name('agent.dashboard');
+            Route::get('/incoming',  [AgentController::class, 'incoming'])->name('agent.incoming');
+            Route::get('/log',       [AgentController::class, 'logCall'])->name('agent.log');
+            Route::get('/history',   [AgentController::class, 'history'])->name('agent.history');
         }
     );
 
     Route::middleware(['supervisor'])->group(
         function () {
-            Route::get('/supervisor/dashboard', [SupervisorController::class, 'dashboard'])->name('dashboard.supervisor');
+            Route::get('/supervisor/dashboard', [SupervisorController::class, 'dashboard'])->name('supervisor.dashboard');
         }
     );
 });

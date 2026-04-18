@@ -1,5 +1,5 @@
-{{-- resources/views/partials/admin-navbar.blade.php --}}
-{{-- Usage: @include('partials.admin-navbar') --}}
+{{-- resources/views/partials/agent-navbar.blade.php --}}
+{{-- Usage: @include('partials.agent-navbar') --}}
 {{-- Pair with: <div class="pl-64"> ... page content ... </div> --}}
 
 <aside class="fixed top-0 left-0 h-screen w-64 z-50 flex flex-col bg-slate-950 border-r border-white/[0.05]"
@@ -15,7 +15,7 @@
 
     {{-- LOGO --}}
     <div class="relative flex items-center gap-3 px-5 h-16 border-b border-white/[0.05] flex-shrink-0">
-        <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2.5 group">
+        <a href="{{ route('agent.dashboard') }}" class="flex items-center gap-2.5 group">
             <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center flex-shrink-0
                         shadow-[0_0_14px_rgba(56,189,248,0.4)] group-hover:shadow-[0_0_22px_rgba(56,189,248,0.65)] transition-all duration-200">
                 <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -24,7 +24,7 @@
             </div>
             <div>
                 <span class="text-sm font-bold tracking-tight text-white leading-none">Cloud<span class="text-sky-400">Call</span></span>
-                <p class="text-[9px] font-semibold tracking-[0.2em] uppercase text-slate-600 mt-0.5">Admin Console</p>
+                <p class="text-[9px] font-semibold tracking-[0.2em] uppercase text-slate-600 mt-0.5">Agent Portal</p>
             </div>
         </a>
     </div>
@@ -35,16 +35,16 @@
         <p class="text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-slate-700 px-3 pb-2 pt-1">Main</p>
 
         {{-- Overview --}}
-        <a href="{{ route('admin.dashboard') }}"
+        <a href="{{ route('supervisor.dashboard') }}"
             class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 relative
-                  {{ request()->routeIs('admin.dashboard')
+                  {{ request()->routeIs('supervisor.dashboard')
                        ? 'text-sky-300 bg-sky-400/10 border border-sky-400/20 shadow-[inset_0_1px_0_rgba(56,189,248,0.1)]'
                        : 'text-slate-500 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent' }}">
-            @if(request()->routeIs('admin.dashboard'))
+            @if(request()->routeIs('supervisor.dashboard'))
             <span class="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-sky-400 rounded-r-full shadow-[0_0_6px_rgba(56,189,248,0.8)]"></span>
             @endif
             <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-200
-                        {{ request()->routeIs('admin.dashboard') ? 'bg-sky-400/15' : 'bg-white/[0.03] group-hover:bg-white/[0.06]' }}">
+                        {{ request()->routeIs('supervisor.dashboard') ? 'bg-sky-400/15' : 'bg-white/[0.03] group-hover:bg-white/[0.06]' }}">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
                     <rect x="3" y="3" width="7" height="7" rx="1" />
                     <rect x="14" y="3" width="7" height="7" rx="1" />
@@ -53,47 +53,6 @@
                 </svg>
             </div>
             Overview
-        </a>
-
-        {{-- Users --}}
-        <a href="{{ route('admin.users') }}"
-            class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 relative
-                  {{ request()->routeIs('admin.users')
-                       ? 'text-sky-300 bg-sky-400/10 border border-sky-400/20 shadow-[inset_0_1px_0_rgba(56,189,248,0.1)]'
-                       : 'text-slate-500 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent' }}">
-            @if(request()->routeIs('admin.users'))
-            <span class="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-sky-400 rounded-r-full shadow-[0_0_6px_rgba(56,189,248,0.8)]"></span>
-            @endif
-            <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-200
-                        {{ request()->routeIs('admin.users') ? 'bg-sky-400/15' : 'bg-white/[0.03] group-hover:bg-white/[0.06]' }}">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
-                </svg>
-            </div>
-            Users
-        </a>
-
-        {{-- Divider --}}
-        <div class="h-px bg-white/[0.04] my-3 mx-1"></div>
-        <p class="text-[0.6rem] font-semibold tracking-[0.2em] uppercase text-slate-700 px-3 pb-2">Actions</p>
-
-        {{-- Add User --}}
-        <a href="{{ route('admin.registration') }}"
-            class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200
-                  {{ request()->routeIs('admin.registration')
-                       ? 'text-emerald-300 bg-emerald-400/10 border border-emerald-400/20'
-                       : 'text-emerald-400 bg-emerald-400/[0.07] border border-emerald-400/15 hover:bg-emerald-400/[0.12] hover:border-emerald-400/30' }}">
-            <div class="w-7 h-7 rounded-lg bg-emerald-400/10 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-400/20 transition-colors duration-200">
-                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                    <circle cx="8.5" cy="7" r="4" />
-                    <line x1="20" y1="8" x2="20" y2="14" />
-                    <line x1="23" y1="11" x2="17" y2="11" />
-                </svg>
-            </div>
-            Add User
         </a>
 
     </nav>
@@ -107,7 +66,7 @@
                 </span>
             </div>
             <div class="flex-1 min-w-0">
-                <p class="text-xs font-semibold text-slate-300 truncate">{{ auth()->user()->name ?? 'Admin' }}</p>
+                <p class="text-xs font-semibold text-slate-300 truncate">{{ auth()->user()->name ?? 'Agent' }}</p>
                 <p class="text-[10px] text-slate-600 truncate">{{ auth()->user()->email ?? '' }}</p>
             </div>
             <span class="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.7)] flex-shrink-0"></span>

@@ -212,56 +212,7 @@
             </table>
         </div>
 
-        {{-- ── Section: Assignment ── --}}
-        <div class="flex items-center gap-3 mb-4">
-            <h2 class="font-syne font-bold text-lg text-white whitespace-nowrap">Client Assignment</h2>
-            <div class="flex-1 h-px bg-slate-800"></div>
-        </div>
-
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-7">
-            <div class="grid grid-cols-3 gap-5 items-end">
-
-                {{-- Agent Dropdown --}}
-                <div class="flex flex-col gap-2">
-                    <label class="text-xs uppercase tracking-widest text-slate-500 font-semibold">Select Agent</label>
-                    <select class="bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-sm px-4 py-2.5 w-full appearance-none cursor-pointer focus:outline-none focus:border-blue-500 transition-colors">
-                        <option value="" disabled selected>Choose an agent…</option>
-                        @foreach($agents as $agent)
-                        <option value="{{ $agent->id }}">{{ $agent->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                {{-- Clients Multi-select --}}
-                <div class="flex flex-col gap-2">
-                    <label class="text-xs uppercase tracking-widest text-slate-500 font-semibold">
-                        Select Clients
-                        <span class="normal-case text-slate-600 font-normal ml-1">(Ctrl / ⌘ for multi)</span>
-                    </label>
-                    <select multiple class="bg-slate-950 border border-slate-800 rounded-xl text-slate-200 text-sm px-2 py-2 w-full h-32 cursor-pointer focus:outline-none focus:border-blue-500 transition-colors">
-                        @foreach($clients as $client)
-                        <option value="{{ $client->id }}">{{ $client->name }}</option>
-                        @endforeach
-                        @if($clients->isEmpty())
-                        <option disabled class="text-slate-500">No clients available</option>
-                        @endif
-                    </select>
-                </div>
-
-                {{-- Assign Button --}}
-                <div>
-                    <button type="button"
-                        class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-cyan-500 text-white font-syne font-bold text-sm px-6 py-3 rounded-xl hover:opacity-90 active:scale-95 transition-all whitespace-nowrap cursor-pointer">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-                            <line x1="12" y1="5" x2="12" y2="19" />
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                        </svg>
-                        Assign
-                    </button>
-                </div>
-
-            </div>
-        </div>
+        
 
     </main>
 

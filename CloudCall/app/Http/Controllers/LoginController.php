@@ -48,8 +48,8 @@ class LoginController extends Controller
             'phone' => $request->phone
         ]);
 
+        return back()->with('User was added successfully >>>');
 
-        return redirect('/home')->with('Success', '>>> User registred successfully <<<');
     }
 
 
