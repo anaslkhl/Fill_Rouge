@@ -6,8 +6,9 @@
 {{-- NAVBAR --}}
 <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/60 backdrop-blur-2xl border-b border-white/[0.05]">
     <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-
+        @guest
         <a href="{{ route('login.form') }}" class="text-xs font-medium text-white bg-white/[0.06] px-3.5 py-2 rounded-lg">User/Login</a>
+        @endguest
         <a href="{{ route('client.home') }}" class="flex items-center gap-2.5 group">
             <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-sky-400 to-sky-600 flex items-center justify-center shadow-[0_0_12px_rgba(56,189,248,0.4)] group-hover:shadow-[0_0_20px_rgba(56,189,248,0.65)] transition-all duration-200">
                 <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
@@ -19,12 +20,8 @@
 
         <div class="hidden md:flex items-center gap-1">
             <a href="{{ route('client.home') }}" class="text-xs font-medium text-white bg-white/[0.06] px-3.5 py-2 rounded-lg">Home</a>
-            @if($client)
-            <a href="{{ route('client.call', $client->uuid) }}" class="text-xs font-medium text-slate-400 hover:text-white px-3.5 py-2 rounded-lg hover:bg-white/[0.05] transition-all duration-150">My call</a>
-            @else
-            <a href="{{ route('client.callform') }}" class="text-xs font-medium text-slate-400 hover:text-white px-3.5 py-2 rounded-lg hover:bg-white/[0.05] transition-all duration-150">New Request</a>
-            @endif
-        </div>
+           
+            <a href="{{ route('client.callform') }}" class="text-xs font-medium text-slate-400 hover:text-white px-3.5 py-2 rounded-lg hover:bg-white/[0.05] transition-all duration-150">New Request</a>        </div>
 
 
     </div>

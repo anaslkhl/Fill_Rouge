@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\AgentReportController;
 use App\Http\Controllers\callFedbackController;
 use App\Http\Controllers\CallLogsController;
 use App\Http\Controllers\ClientController;
@@ -62,6 +63,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['supervisor'])->group(
         function () {
             Route::get('/supervisor/dashboard', [SupervisorController::class, 'dashboard'])->name('supervisor.dashboard');
+            Route::get('/reports/agent',[AgentReportController::class, 'index'])->name('report.agent.form');
+            Route::post('/reports/agent/export', [AgentReportController::class, 'export'])->name('supervisor.report.export');
         }
     );
 });

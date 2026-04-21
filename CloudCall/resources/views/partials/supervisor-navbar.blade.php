@@ -54,6 +54,25 @@
             </div>
             Overview
         </a>
+        <a href="{{ route('report.agent.form') }}"
+            class="group flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all duration-200 relative
+                  {{ request()->routeIs('report.agent.form')
+                       ? 'text-sky-300 bg-sky-400/10 border border-sky-400/20 shadow-[inset_0_1px_0_rgba(56,189,248,0.1)]'
+                       : 'text-slate-500 hover:text-slate-200 hover:bg-white/[0.04] border border-transparent' }}">
+            @if(request()->routeIs('report.agent.form'))
+            <span class="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 bg-sky-400 rounded-r-full shadow-[0_0_6px_rgba(56,189,248,0.8)]"></span>
+            @endif
+            <div class="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors duration-200
+                        {{ request()->routeIs('supervisor.dashboard') ? 'bg-sky-400/15' : 'bg-white/[0.03] group-hover:bg-white/[0.06]' }}">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <rect x="3" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="3" width="7" height="7" rx="1" />
+                    <rect x="14" y="14" width="7" height="7" rx="1" />
+                    <rect x="3" y="14" width="7" height="7" rx="1" />
+                </svg>
+            </div>
+            Export Excel
+        </a>
 
     </nav>
 

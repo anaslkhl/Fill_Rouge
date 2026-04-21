@@ -86,9 +86,9 @@
             id="register-role"
             class="w-full pl-10 pr-9 py-[11px] rounded-[10px] bg-[#080c14] border border-white/[0.08] text-[#e2e8f0] text-sm appearance-none cursor-pointer focus:outline-none focus:border-violet-400/40 focus:bg-[#09101d] focus:ring-1 focus:ring-violet-400/20 transition-all duration-200">
             <option value="" disabled selected>Select user role…</option>
-            <option value="agent" {{ old('role') == 'agent' ? 'selected' : '' }}>👤 Agent</option>
-            <option value="supervisor" {{ old('role') == 'supervisor' ? 'selected' : '' }}>⭐ Supervisor</option>
-            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>⚡ Admin</option>
+            <option value="agent" {{ old('role') == 'agent' ? 'selected' : '' }}> Agent</option>
+            <option value="supervisor" {{ old('role') == 'supervisor' ? 'selected' : '' }}> Supervisor</option>
+            <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}> Admin</option>
         </select>
         <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none">
             <svg class="w-4 h-4 text-white/[0.25]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
